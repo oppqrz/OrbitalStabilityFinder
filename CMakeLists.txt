@@ -36,6 +36,7 @@ set(SOURCES
     src/rendering/SetupCamera.cpp
     src/rendering/SetupLighting.cpp
     src/core/Gravity.cpp
+    src/core/SimulateTime.cpp
 )
 
 # Add the test executable
