@@ -1,0 +1,5 @@
+---
+Checks: 'modernize-*,-modernize-use-trailing-return-type*,-llvm*'
+WarningsAsErrors: ''
+HeaderFilterRegex: '.*'
+AnalyzeTemporaryDtors: false
