@@ -14,7 +14,7 @@
 #include "../include/core/Gravity.hpp"
 #include "../include/rendering/InitaliseRendering.hpp"
 
-std::vector<Body> SimulateTime(std::vector<Body> AllBodies, double maxTime =-1);
-std::vector<Body> SimulateTimeAndRender(std::vector<Body> AllBodies, double maxTime =-1);
+std::vector<Body> SimulateTime(std::vector<Body> allBodies, double maxTime =-1);
+std::vector<Body> SimulateTimeAndRender(std::vector<Body> allBodies, double maxTime =-1);
 
 #endif // SIMULATETIME_HPP
