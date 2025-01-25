@@ -40,13 +40,18 @@ set(SOURCES
 )
 
 # Add the test executable
-add_executable(tests
+add_executable(simulateSolarSystem
+    ${SOURCES}
+    src/mains/SimulateSolarSystem.cpp
+)
+add_executable(test_solarsystem 
     ${SOURCES}
     tests/SolarSystemTest.cpp
 )
 
-target_link_libraries(tests PRIVATE GTest::GTest glfw glad::glad GLU ${OPENGL_LIBRARIES})
+target_link_libraries(simulateSolarSystem PRIVATE glfw glad::glad GLU ${OPENGL_LIBRARIES})
+target_link_libraries(test_solarsystem PRIVATE GTest::GTest GTest::Main glfw glad::glad GLU ${OPENGL_LIBRARIES})
 
 # Register the tests with CTest
-# add_test(NAME SolarSystemTest COMMAND tests)
+add_test(NAME SolarSystemTest COMMAND test_solarsystem)
 
