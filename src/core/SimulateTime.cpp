@@ -2,13 +2,13 @@
 
 
 
-int SimulateTime(std::vector<Body> AllBodies) {
+std::vector<Body> SimulateTime(std::vector<Body> AllBodies, double maxTime) {
 
     double timeStep = 1;
     int checkInTime = 60 * 60 * 24; // How frequently to Render and print out the time passed, By default its a day.
 
     int nT = 0;
-    while(true) {
+    while (maxTime <= 0 || nT <= maxTime) {
         nT++;
         for (int i = 0; i < AllBodies.size(); i++) {
             for (int j = 0; j < AllBodies.size(); j++) {
@@ -21,15 +21,15 @@ int SimulateTime(std::vector<Body> AllBodies) {
             UpdatePosition(AllBodies[i], timeStep);
         }
         if (nT % checkInTime == 0) {
-            std::cout << "Time Passed :  " << timeStep * nT / checkInTime << " Days " << std::endl;
+            // std::cout << "Time Passed :  " << timeStep * nT / checkInTime << " Days " << std::endl;
         } 
     }
-    return 0;
+    return AllBodies;
 }
 
 
 
-int SimulateTimeAndRender(std::vector<Body> AllBodies) {
+std::vector<Body> SimulateTimeAndRender(std::vector<Body> AllBodies, double maxTime) {
     auto window = initaliseRendering();
 
     // Set up the camera and lighting once
@@ -39,7 +39,7 @@ int SimulateTimeAndRender(std::vector<Body> AllBodies) {
     int checkInTime = 60 * 60 * 24; // How frequently to Render and print out the time passed, By default its a day.
 
     int nT = 0;
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(window) && (maxTime <= 0 || nT <= maxTime)) {
         nT++;
         for (int i = 0; i < AllBodies.size(); i++) {
             for (int j = 0; j < AllBodies.size(); j++) {
@@ -54,10 +54,10 @@ int SimulateTimeAndRender(std::vector<Body> AllBodies) {
 
         if (nT % checkInTime == 0) {
             renderBodies(window, AllBodies);  // Call the render function to update the visualization
-            std::cout << "Time Passed :  " << timeStep * nT / checkInTime << " Days " << std::endl;
+            // std::cout << "Time Passed :  " << timeStep * nT / checkInTime << " Days " << std::endl;
         } 
     }
     glfwDestroyWindow(window);
     glfwTerminate();
-    return 0;
+    return AllBodies;
 }
