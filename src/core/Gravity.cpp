@@ -1,28 +1,29 @@
 #include "../include/core/Gravity.hpp"
 
-// Function to calculate acceleration in X direction due to another body
-double CalculateAccelerationX(const Body& subjectBody, const Body& effectingBody) {
+
+struct Accel3 {
+    double xAccel;
+    double yAccel;
+    double zAccel;
+};
+
+
+Accel3 CaulcateAcceleration3(const Body& subjectBody, const Body& effectingBody){
     double distance = GetDistance(subjectBody, effectingBody);
-    return -(subjectBody.PosX - effectingBody.PosX) * (GConst * effectingBody.Mass) / pow(distance, 3);
+    double forceConstant = (GConst * effectingBody.Mass) / pow(distance, 3);
+    double xAccel = -(subjectBody.PosX - effectingBody.PosX) * forceConstant;
+    double yAccel = -(subjectBody.PosY - effectingBody.PosY) * forceConstant;
+    double zAccel = -(subjectBody.PosZ - effectingBody.PosZ) * forceConstant;
+    Accel3 acceleration = {xAccel,yAccel,zAccel};
+    return acceleration;
 }
 
-// Function to calculate acceleration in Y direction due to another body
-double CalculateAccelerationY(const Body& subjectBody, const Body& effectingBody) {
-    double distance = GetDistance(subjectBody, effectingBody);
-    return -(subjectBody.PosY - effectingBody.PosY) * (GConst * effectingBody.Mass) / pow(distance, 3);
-}
 
-// Function to calculate acceleration in Z direction due to another body
-double CalculateAccelerationZ(const Body& subjectBody, const Body& effectingBody) {
-    double distance = GetDistance(subjectBody, effectingBody);
-    return -(subjectBody.PosZ - effectingBody.PosZ) * (GConst * effectingBody.Mass) / pow(distance, 3);
-}
-
-// Function to update velocity based on the acceleration from another body
-void UpdateVelocity(Body& subjectBody, const Body& effectingBody) {
-    subjectBody.VelX += CalculateAccelerationX(subjectBody, effectingBody);
-    subjectBody.VelY += CalculateAccelerationY(subjectBody, effectingBody);
-    subjectBody.VelZ += CalculateAccelerationZ(subjectBody, effectingBody);
+void UpdateVelocity3(Body& subjectBody, const Body& effectingBody) {
+    Accel3 acceleration = CaulcateAcceleration3(subjectBody, effectingBody);
+    subjectBody.VelX += acceleration.xAccel;
+    subjectBody.VelY += acceleration.yAccel;
+    subjectBody.VelZ += acceleration.zAccel;
 }
 
 // Function to update position based on velocity and time step

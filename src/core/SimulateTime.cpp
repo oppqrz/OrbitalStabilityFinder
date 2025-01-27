@@ -1,22 +1,19 @@
 #include "../include/core/SimulateTime.hpp"
-
-
+#include <omp.h>
+#include <iostream>
 
 std::vector<Body> SimulateTime(std::vector<Body> allBodies, double maxTime) {
 
-    double timeStep = 1;
-    int checkInTime = 60 * 60 * 24; // How frequently to Render and print out the time passed, By default its a day.
+    const double timeStep = 1;
+    const int checkInTime = 60 * 60 * 24; // How frequently to Render and print out the time passed, By default its a day.
 
     int nT = 0;
     while (maxTime <= 0 || nT <= maxTime) {
         nT++;
         for (int i = 0; i < allBodies.size(); i++) {
-            for (int j = 0; j < allBodies.size(); j++) {
-                if (i == j) {
-                    continue;
-                } else {
-                    UpdateVelocity(allBodies[i], allBodies[j]);
-                }
+            for (int j = i + 1; j < allBodies.size(); j++) {
+                UpdateVelocity3(allBodies[i], allBodies[j]);
+                UpdateVelocity3(allBodies[j], allBodies[i]); // if symmetry requires explicit update
             }
             UpdatePosition(allBodies[i], timeStep);
         }
@@ -42,13 +39,13 @@ std::vector<Body> SimulateTimeAndRender(std::vector<Body> allBodies, double maxT
     while (!glfwWindowShouldClose(window) && (maxTime <= 0 || nT <= maxTime)) {
         nT++;
         for (int i = 0; i < allBodies.size(); i++) {
-            for (int j = 0; j < allBodies.size(); j++) {
-                if (i == j) {
-                    continue;
-                } else {
-                    UpdateVelocity(allBodies[i], allBodies[j]);
-                }
+            for (int j = i + 1; j < allBodies.size(); j++) {
+                UpdateVelocity3(allBodies[i], allBodies[j]);
+                UpdateVelocity3(allBodies[j], allBodies[i]); // if symmetry requires explicit update
+
             }
+        }
+        for (int i = 0; i < allBodies.size(); i++) {
             UpdatePosition(allBodies[i], timeStep);
         }
 

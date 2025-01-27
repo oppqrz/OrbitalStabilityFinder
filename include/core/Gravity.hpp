@@ -10,10 +10,10 @@
 const double GConst = 6.67430e-11;
 
 // Function declarations
-double CalculateAccelerationX(const Body& subjectBody, const Body& effectingBody);
-double CalculateAccelerationY(const Body& subjectBody, const Body& effectingBody);
-double CalculateAccelerationZ(const Body& subjectBody, const Body& effectingBody);
-void UpdateVelocity(Body& subjectBody, const Body& effectingBody);
 void UpdatePosition(Body& body, double timeStep = 1);
+
+struct Accel3;
+Accel3 CaulcateAcceleration3(const Body& subjectBody, const Body& effectingBody);
+void UpdateVelocity3(Body& subjectBody, const Body& effectingBody);
 
 #endif // GRAVITY_HPP
