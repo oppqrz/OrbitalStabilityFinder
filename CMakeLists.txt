@@ -49,10 +49,17 @@ add_executable(test_solarsystem
     ${SOURCES}
     tests/SolarSystemTest.cpp
 )
+add_executable(test_simulationtiming 
+    ${SOURCES}
+    tests/SimulationTiming.cpp
+)
 
 target_link_libraries(simulateSolarSystem PRIVATE glfw glad::glad GLU ${OPENGL_LIBRARIES})
 target_link_libraries(test_solarsystem PRIVATE GTest::GTest GTest::Main glfw glad::glad GLU ${OPENGL_LIBRARIES})
+target_link_libraries(test_simulationtiming PRIVATE GTest::GTest GTest::Main glfw glad::glad GLU ${OPENGL_LIBRARIES})
+
 
 # Register the tests with CTest
 add_test(NAME SolarSystemTest COMMAND test_solarsystem)
+add_test(NAME SimulationTiming COMMAND test_simulationtiming)
 
