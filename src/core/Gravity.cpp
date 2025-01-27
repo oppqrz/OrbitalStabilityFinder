@@ -1,14 +1,8 @@
 #include "../include/core/Gravity.hpp"
 
 
-struct Accel3 {
-    double xAccel;
-    double yAccel;
-    double zAccel;
-};
 
-
-Accel3 CaulcateAcceleration3(const Body& subjectBody, const Body& effectingBody){
+Accel3 CalculateAcceleration3(const Body& subjectBody, const Body& effectingBody){
     double distance = GetDistance(subjectBody, effectingBody);
     double forceConstant = (GConst * effectingBody.Mass) / pow(distance, 3);
     double xAccel = -(subjectBody.PosX - effectingBody.PosX) * forceConstant;
@@ -20,7 +14,7 @@ Accel3 CaulcateAcceleration3(const Body& subjectBody, const Body& effectingBody)
 
 
 void UpdateVelocity3(Body& subjectBody, const Body& effectingBody) {
-    Accel3 acceleration = CaulcateAcceleration3(subjectBody, effectingBody);
+    Accel3 acceleration = CalculateAcceleration3(subjectBody, effectingBody);
     subjectBody.VelX += acceleration.xAccel;
     subjectBody.VelY += acceleration.yAccel;
     subjectBody.VelZ += acceleration.zAccel;

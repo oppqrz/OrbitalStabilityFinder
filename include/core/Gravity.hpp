@@ -12,8 +12,14 @@ const double GConst = 6.67430e-11;
 // Function declarations
 void UpdatePosition(Body& body, double timeStep = 1);
 
-struct Accel3;
-Accel3 CaulcateAcceleration3(const Body& subjectBody, const Body& effectingBody);
+
+struct Accel3 {
+    double xAccel;
+    double yAccel;
+    double zAccel;
+};
+
+Accel3 CalculateAcceleration3(const Body& subjectBody, const Body& effectingBody);
 void UpdateVelocity3(Body& subjectBody, const Body& effectingBody);
 
 #endif // GRAVITY_HPP
