@@ -12,9 +12,10 @@ std::vector<Body> SimulateTime(std::vector<Body> allBodies, double maxTime) {
         nT++;
         for (int i = 0; i < allBodies.size(); i++) {
             for (int j = i + 1; j < allBodies.size(); j++) {
-                UpdateVelocity3(allBodies[i], allBodies[j]);
-                UpdateVelocity3(allBodies[j], allBodies[i]); // if symmetry requires explicit update
+                UpdateVelocityPair3(allBodies[i], allBodies[j]);
             }
+        }
+        for (int i = 0; i < allBodies.size(); i++) {
             UpdatePosition(allBodies[i], timeStep);
         }
         if (nT % checkInTime == 0) {
@@ -40,9 +41,7 @@ std::vector<Body> SimulateTimeAndRender(std::vector<Body> allBodies, double maxT
         nT++;
         for (int i = 0; i < allBodies.size(); i++) {
             for (int j = i + 1; j < allBodies.size(); j++) {
-                UpdateVelocity3(allBodies[i], allBodies[j]);
-                UpdateVelocity3(allBodies[j], allBodies[i]); // if symmetry requires explicit update
-
+                UpdateVelocityPair3(allBodies[i], allBodies[j]);
             }
         }
         for (int i = 0; i < allBodies.size(); i++) {

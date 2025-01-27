@@ -4,7 +4,7 @@
 #include <cmath>
 #include "../include/models/Body.hpp"
 #include "../include/core/Geometry.hpp"
-
+#include <tuple>
 
 // Gravitational constant
 const double GConst = 6.67430e-11;
@@ -19,7 +19,14 @@ struct Accel3 {
     double zAccel;
 };
 
+struct Accel3Pair {
+    Accel3 AccelBody1;
+    Accel3 AccelBody2;
+};
+
 Accel3 CalculateAcceleration3(const Body& subjectBody, const Body& effectingBody);
+Accel3Pair CalculatePairAcceleration3(const Body& subjectBody, const Body& effectingBody);
 void UpdateVelocity3(Body& subjectBody, const Body& effectingBody);
+void UpdateVelocityPair3(Body& subjectBody,  Body& effectingBody);
 
 #endif // GRAVITY_HPP
