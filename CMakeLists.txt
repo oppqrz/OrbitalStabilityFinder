@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 project(OrbitalStabilityFinder)
 
 # Set compiler flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast -fopenmp")
 
 # Include vcpkg toolchain
 set(CMAKE_TOOLCHAIN_FILE "/home/oppqrz/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "vcpkg toolchain file" FORCE)
@@ -18,6 +18,7 @@ find_package(GTest REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(glad CONFIG REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(OpenMP REQUIRED)
 
 # Enable testing
 enable_testing()
