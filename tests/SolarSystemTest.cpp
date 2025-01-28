@@ -9,7 +9,7 @@ TEST(SolarSystemTest, SimulatedEarthAndSunX) {
     std::vector<Body> bodies = SunEarth::AllBodies;
 
     // Simulate the system for 1 year
-    bodies = SimulateTimeAndRender(bodies,365.25  * 24 * 60 * 60);
+    SimulateTimeAndRender(bodies,365.25  * 24 * 60 * 60);
 
     const double tolerance = 1E6; // Allowable error in meters
     EXPECT_NEAR(bodies[0].PosX, SunEarth::Sun.PosX, tolerance*1000);  // Sun
@@ -21,7 +21,7 @@ TEST(SolarSystemTest, SimulatedEarthAndSunY) {
     std::vector<Body> bodies = SunEarth::AllBodies;
 
     // Simulate the system for 1 year
-    bodies = SimulateTimeAndRender(bodies,365.2425  * 24 * 60 * 60);
+    SimulateTimeAndRender(bodies,365.2425  * 24 * 60 * 60);
 
     const double tolerance = 1E6; // Allowable error in meters
     EXPECT_NEAR(bodies[0].PosY, SunEarth::Sun.PosY, tolerance*1000);  // Sun
@@ -33,7 +33,7 @@ TEST(SolarSystemTest, SimulatedEarthAndSunZ) {
     std::vector<Body> bodies = SunEarth::AllBodies;
 
     // Simulate the system for 1 year
-    bodies = SimulateTimeAndRender(bodies,365.2425  * 24 * 60 * 60);
+    SimulateTimeAndRender(bodies,365.2425  * 24 * 60 * 60);
 
     const double tolerance = 1E6; // Allowable error in meters
     EXPECT_NEAR(bodies[0].PosZ, SunEarth::Sun.PosZ, tolerance*1000);  // Sun

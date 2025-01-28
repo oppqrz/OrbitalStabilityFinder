@@ -17,6 +17,18 @@ namespace InnerSolarSystem {
     inline const std::vector<Body> AllBodies = {Sun, Mercury, Venus, Earth, Mars};
 }
 
+
+namespace CollidingBodies {
+
+    // Predefined celestial bodies with radius (in kilometers converted to meters)
+    inline Body Sun = {2E32, 0., 0., 0., 0., 0., 0., 695700.0 * 1E3};
+    inline Body Mercury = {3.3E23, 0., 57E9, 0., 47.3E3, 0., 0., 2439.7 * 1E3};
+
+    // Vector of all celestial bodies
+    inline const std::vector<Body> AllBodies = {Sun, Mercury};
+}
+
+
 namespace SolarSystem {
 
     // Predefined celestial bodies with radius (in kilometers converted to meters)

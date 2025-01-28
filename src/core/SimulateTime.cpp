@@ -49,9 +49,9 @@ std::vector<Body> SimulateTimeParralel(std::vector<Body> allBodies, double maxTi
     return allBodies;
 }
 
-
 std::vector<Body> SimulateTimeAndRender(std::vector<Body> allBodies, double maxTime) {
     auto window = initaliseRendering();
+    bool hasCollision = false;
 
     // Set up the camera and lighting once
     setupCameraPerspective(allBodies.back().PosY);
@@ -69,6 +69,13 @@ std::vector<Body> SimulateTimeAndRender(std::vector<Body> allBodies, double maxT
         }
         for (int i = 0; i < allBodies.size(); i++) {
             UpdatePosition(allBodies[i], timeStep);
+            for (int j = i + 1; j < allBodies.size(); j++) {
+                hasCollision = HandleCollisions(&allBodies[i], &allBodies[j]);
+                if(hasCollision){
+                    std::cout << "COLLISION" << std::endl;
+                    return allBodies;
+                }
+            }
         }
 
         if (nT % checkInTime == 0) {
@@ -80,3 +87,4 @@ std::vector<Body> SimulateTimeAndRender(std::vector<Body> allBodies, double maxT
     glfwTerminate();
     return allBodies;
 }
+

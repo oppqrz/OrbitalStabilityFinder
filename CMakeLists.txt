@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 project(OrbitalStabilityFinder)
 
 # Set compiler flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast -fopenmp")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast")
 
 # Include vcpkg toolchain
 set(CMAKE_TOOLCHAIN_FILE "/home/oppqrz/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "vcpkg toolchain file" FORCE)
@@ -39,7 +39,8 @@ set(SOURCES
     src/core/Gravity.cpp
     src/core/SimulateTime.cpp
     src/core/Geometry.cpp
-)
+    src/core/Collisions.cpp
+    )
 
 # Add the test executable
 add_executable(simulateSolarSystem
@@ -55,12 +56,19 @@ add_executable(test_simulationtiming
     tests/SimulationTiming.cpp
 )
 
+add_executable(test_collision 
+    ${SOURCES}
+    tests/CollisionsTest.cpp
+)
+
 target_link_libraries(simulateSolarSystem PRIVATE glfw glad::glad GLU ${OPENGL_LIBRARIES})
 target_link_libraries(test_solarsystem PRIVATE GTest::GTest GTest::Main glfw glad::glad GLU ${OPENGL_LIBRARIES})
 target_link_libraries(test_simulationtiming PRIVATE GTest::GTest GTest::Main glfw glad::glad GLU ${OPENGL_LIBRARIES})
+target_link_libraries(test_collision PRIVATE GTest::GTest GTest::Main glfw glad::glad GLU ${OPENGL_LIBRARIES})
 
 
 # Register the tests with CTest
 add_test(NAME SolarSystemTest COMMAND test_solarsystem)
 add_test(NAME SimulationTiming COMMAND test_simulationtiming)
+add_test(NAME CollisionsTest COMMAND test_collision)
 

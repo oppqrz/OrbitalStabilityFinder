@@ -12,7 +12,9 @@
 #include "../include/rendering/SetupCamera.hpp"
 #include "../include/rendering/SetupLighting.hpp"
 #include "../include/core/Gravity.hpp"
+#include "../include/core/Collisions.hpp"
 #include "../include/rendering/InitaliseRendering.hpp"
+
 
 std::vector<Body> SimulateTime(std::vector<Body> allBodies, double maxTime =-1);
 std::vector<Body> SimulateTimeParralel(std::vector<Body> allBodies, double maxTime =-1);
