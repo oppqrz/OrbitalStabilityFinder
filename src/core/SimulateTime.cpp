@@ -1,11 +1,28 @@
 #include "../include/core/SimulateTime.hpp"
 #include <omp.h>
 #include <iostream>
+#include <cmath>
+
+double GetLargestPositionComponent(const std::vector<Body>& allBodies) {
+    double maxPos = 0.0;
+    for (const auto& body : allBodies) {
+        maxPos = std::max(maxPos, std::max(std::fabs(body.PosX), 
+                            std::max(std::fabs(body.PosY), std::fabs(body.PosZ))));
+    }
+    return maxPos;
+}
 
 std::vector<Body> SimulateTime(std::vector<Body> allBodies, double maxTime) {
 
     const double timeStep = 1;
     const int checkInTime = 60 * 60 * 24; // How frequently to Render and print out the time passed, By default its a day.
+
+    
+    for (auto body: allBodies) {
+        body.historicPosX.reserve(maxTime);
+        body.historicPosY.reserve(maxTime);
+        body.historicPosZ.reserve(maxTime);
+    }
 
     int nT = 0;
     while (maxTime <= 0 || nT <= maxTime) {
@@ -16,6 +33,9 @@ std::vector<Body> SimulateTime(std::vector<Body> allBodies, double maxTime) {
             }
         }
         for (int i = 0; i < allBodies.size(); i++) {
+            allBodies[i].historicPosX.push_back(allBodies[i].PosX);
+            allBodies[i].historicPosY.push_back(allBodies[i].PosY);
+            allBodies[i].historicPosZ.push_back(allBodies[i].PosZ);
             UpdatePosition(allBodies[i], timeStep);
         }
         if (nT % checkInTime == 0) {
@@ -53,8 +73,10 @@ std::vector<Body> SimulateTimeAndRender(std::vector<Body> allBodies, double maxT
     auto window = initaliseRendering();
     bool hasCollision = false;
 
+    double largestPos = GetLargestPositionComponent(allBodies);
+
     // Set up the camera and lighting once
-    setupCameraPerspective(allBodies.back().PosY);
+    setupCameraPerspective(largestPos);
     setupLighting();
     double timeStep = 1;
     int checkInTime = 60 * 60 * 24; // How frequently to Render and print out the time passed, By default its a day.
